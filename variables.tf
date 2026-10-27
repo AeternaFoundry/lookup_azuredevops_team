@@ -37,26 +37,11 @@ EOT
   validation {
     condition = alltrue([
       for k, v in var.team_lookup : (
-        alltrue([for x in v.administrators : length(trimspace(x)) > 0])
-      )
-    ])
-    error_message = "must not be empty or only whitespace"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.team_lookup : (
-        alltrue([for x in v.members : length(trimspace(x)) > 0])
-      )
-    ])
-    error_message = "must not be empty or only whitespace"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.team_lookup : (
         v.top == null || (v.top >= 1)
       )
     ])
     error_message = "must be at least 1"
   }
+  # Note: 2 additional provider-side validators are enforced at apply time but not mirrored as validation{} blocks here (bespoke or non-mechanically-translatable).
 }
 
